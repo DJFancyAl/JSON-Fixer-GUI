@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Files",
+            "request": "launch",
+            "mainClass": "com.jsonfixer/com.jsonfixer.Files",
+            "projectName": "jsonfixer"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "com.jsonfixer/com.jsonfixer.App",
+            "projectName": "jsonfixer"
+        },
+        {
+            "type": "java",
+            "name": "Launch jsonfixer",
+            "request": "launch",
+            "mainClass": "com.jsonfixer.App"
+        }
+    ]
+}
