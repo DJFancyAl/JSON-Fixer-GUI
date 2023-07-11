@@ -18,7 +18,6 @@ public class Files {
 
     public Files() {
         preferences = App.getPreferences();
-        // preferences.put("fileLocation", "C:\\Users\\ablue\\Downloads\\");
     }
 
     private static JsonObject readFile(String filePath) {
@@ -59,8 +58,7 @@ public class Files {
         if (matcher.find()) {
             filePath = matcher.group(1);
             String fileLocation = preferences.get("fileLocation", "No file found.");
-            try (FileWriter fileWriter = new FileWriter(fileLocation + filePath + ".json")) {
-                System.out.println(fileLocation);
+            try (FileWriter fileWriter = new FileWriter(fileLocation + "/" + filePath + ".json")) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String jsonString = gson.toJson(jsonFile);
                 fileWriter.write(jsonString);
@@ -79,13 +77,4 @@ public class Files {
         String createdFile = createFile(afterFile, filePath);
         return createdFile;
     }
-
-    // public static void main(String[] args) {
-    // String filePath = "C:\\Users\\ablue\\Desktop\\Scripts\\For_Aaron\\JSON
-    // Converter\\Files\\before.json";
-    // JsonObject beforeFile = readFile(filePath);
-    // JsonObject afterFile = editFile(beforeFile);
-    // createFile(afterFile, filePath);
-    // }
-
 }

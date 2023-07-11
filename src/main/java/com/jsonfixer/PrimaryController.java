@@ -9,7 +9,11 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -24,6 +28,21 @@ public class PrimaryController {
 
     @FXML
     private VBox mainLayout;
+
+    @FXML
+    private Label alertLabel;
+
+    private void createMessage(String result, Boolean success) {
+        // Label message = new Label();
+        // Font font = Font.font("System", FontWeight.BOLD, 12);
+        // message.setFont(font);
+        alertLabel.setText(result);
+        if (success) {
+            alertLabel.setTextFill(Color.web("#127734"));
+        } else {
+            alertLabel.setTextFill(Color.web("#940808"));
+        }
+    }
 
     private ScrollPane createResultPane() {
         // Create a scroll pane.
@@ -71,7 +90,6 @@ public class PrimaryController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null) {
-            // Handle the selected file
             fileInput.setText(selectedFile.getAbsolutePath());
         }
     }
@@ -79,16 +97,24 @@ public class PrimaryController {
     @FXML
     private void convertFile(ActionEvent event) {
         String filePath = fileInput.getText();
-        if (filePath == "") {
-            System.out.println("Insert some text.");
+        if (filePath.isEmpty()) {
+            createMessage("Select a File to Edit...", false);
         } else {
-            System.out.println("Converting file " + filePath + "...");
-            String updatedJSON = fileManager.changeOne(filePath);
-            ScrollPane resultPane = createResultPane();
-            mainLayout.getChildren().add(resultPane);
-            resultText.setText(updatedJSON);
-            fileInput.setText("");
+            try {
+                String updatedJSON = fileManager.changeOne(filePath);
+                ScrollPane resultPane = createResultPane();
+                createMessage("File Converted - Results:", true);
+                mainLayout.getChildren().add(resultPane);
+                resultText.setText(updatedJSON);
+                fileInput.setText("");
+            } catch (Exception e) {
+                createMessage("Error: " + e, false);
+            }
         }
     }
 
+    public void closeApplication() {
+        Stage stage = (Stage) mainLayout.getScene().getWindow();
+        stage.close();
+    }
 }

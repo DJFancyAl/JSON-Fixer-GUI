@@ -17,8 +17,8 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Settings" />
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="menuSettings" mnemonicParsing="false" onAction="#switchToSecondary" text="Settings" />
+                  <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#closeApplication" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
@@ -48,8 +48,8 @@
             </HBox>
             <HBox alignment="CENTER" maxWidth="600.0">
                <children>
-                  <TextField fx:id="fileLocation" promptText="Select a location..." HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="Browse" />
+                  <TextField fx:id="locationInput" promptText="Select a location..." HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#openDirectoryChooser" text="Browse" />
                </children>
                <VBox.margin>
                   <Insets />
@@ -62,8 +62,8 @@
       </VBox>
       <HBox alignment="CENTER" spacing="10.0">
          <children>
-              <Button fx:id="secondaryButton" onAction="#switchToPrimary" text="Switch to Primary View" />
-            <Button mnemonicParsing="false" text="Save Changes" />
+              <Button fx:id="secondaryButton" onAction="#switchToPrimary" text="Go Back" />
+            <Button mnemonicParsing="false" onAction="#savePreferences" text="Save Changes" />
          </children>
       </HBox>
     </children>
