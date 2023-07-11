@@ -1,4 +1,5 @@
-com\jsonfixer\Files.class
 module-info.class
+com\jsonfixer\SecondaryController.class
+com\jsonfixer\Files.class
 com\jsonfixer\App.class
 com\jsonfixer\PrimaryController.class
