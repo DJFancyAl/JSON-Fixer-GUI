@@ -9,11 +9,16 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.stream.Collectors;
-
+import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Files {
+    private Preferences preferences;
+
+    public Files() {
+        preferences = App.getPreferences();
+    }
 
     private static JsonObject readFile(String filePath) {
         // Read the JSON File
@@ -44,7 +49,7 @@ public class Files {
         return jsonFile;
     }
 
-    private static String createFile(JsonObject jsonFile, String filePath) {
+    private String createFile(JsonObject jsonFile, String filePath) {
         String regex = ".*\\\\(\\w+).json";
 
         final Pattern pattern = Pattern.compile(regex);
@@ -52,7 +57,8 @@ public class Files {
 
         if (matcher.find()) {
             filePath = matcher.group(1);
-            try (FileWriter fileWriter = new FileWriter(filePath + ".json")) {
+            String fileLocation = preferences.get("fileLocation", "No file found.");
+            try (FileWriter fileWriter = new FileWriter(fileLocation + "/" + filePath + ".json")) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String jsonString = gson.toJson(jsonFile);
                 fileWriter.write(jsonString);
@@ -71,13 +77,4 @@ public class Files {
         String createdFile = createFile(afterFile, filePath);
         return createdFile;
     }
-
-    // public static void main(String[] args) {
-    // String filePath = "C:\\Users\\ablue\\Desktop\\Scripts\\For_Aaron\\JSON
-    // Converter\\Files\\before.json";
-    // JsonObject beforeFile = readFile(filePath);
-    // JsonObject afterFile = editFile(beforeFile);
-    // createFile(afterFile, filePath);
-    // }
-
 }
